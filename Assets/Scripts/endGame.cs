@@ -8,7 +8,7 @@ public class endGame : MonoBehaviour {
 	[SerializeField] GameObject enableStuff;
 
 	void Update () {
-		if (HitCount.getHits () >= 20) {
+		if (HitCount.hitCount >= HitCount.maxHits) {
 			HitCount.gameOver = true;
 			disableStuff.SetActive (false);
 			enableStuff.SetActive (true);

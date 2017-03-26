@@ -50,6 +50,9 @@ public class PlayerController : MonoBehaviour
 				motor.RotateCamera (_cameraRotationX);
 			}
 
+		} else {
+			_yRot = 0;
+			_xRot = 0;
 		}
 	}
 }

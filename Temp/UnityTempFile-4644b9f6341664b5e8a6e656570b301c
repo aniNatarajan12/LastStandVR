@@ -80,12 +80,12 @@
 -define:UNITY_EDITOR_OSX
 -define:UNITY_TEAM_LICENSE
 -define:CROSS_PLATFORM_INPUT
-'Assets/GameOver.cs'
-'Assets/HitCount.cs'
 'Assets/Scripts/Enemy.cs'
 'Assets/Scripts/EnemyAI.cs'
 'Assets/Scripts/EnemyManager.cs'
 'Assets/Scripts/Fortress.cs'
+'Assets/Scripts/GameOver.cs'
+'Assets/Scripts/HitCount.cs'
 'Assets/Scripts/PlayerController.cs'
 'Assets/Scripts/PlayerMotor.cs'
 'Assets/Scripts/PlayerUI.cs'
@@ -95,8 +95,8 @@
 'Assets/Scripts/Shooter.cs'
 'Assets/Scripts/SpawnFortress.cs'
 'Assets/Scripts/Spawner.cs'
-'Assets/endGame.cs'
-'Assets/healthBar.cs'
+'Assets/Scripts/endGame.cs'
+'Assets/Scripts/healthBar.cs'
 'Assets/redisU/AssemblyInfo.cs'
 'Assets/redisU/events/MessageEventArgs.cs'
 'Assets/redisU/events/SubscriptionEventArgs.cs'

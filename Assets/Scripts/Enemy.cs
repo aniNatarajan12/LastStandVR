@@ -47,6 +47,7 @@ public class Enemy : MonoBehaviour {
 
 		//Spawn a death effect
 		animator.SetBool("isDead", true);
+		HitCount.addKill ();
 		EnemyManager.UnRegisterEnemy (transform.name, id);
 		Destroy (this, 3f);
 

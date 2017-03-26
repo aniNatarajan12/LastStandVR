@@ -21,7 +21,6 @@ public class Shooter : MonoBehaviour {
 	[Header ("UI")]
 	[SerializeField] private Text ammoText;
 	[SerializeField] private Text scoreText;
-	[SerializeField] private int kills;
 
 	[Header ("Redis")]
 	RedisMouse rm;
@@ -44,7 +43,7 @@ public class Shooter : MonoBehaviour {
 
 		if (Time.time > lastTime) {
 			fire = rm.getShouldFire();
-			Debug.Log (fire.ToString() + "  SHOOOT");
+//			Debug.Log (fire.ToString() + "  SHOOOT");
 			lastTime = Time.time + getTime;
 		}
 
@@ -110,11 +109,6 @@ public class Shooter : MonoBehaviour {
 				Enemy _enemy = EnemyManager.GetEnemy (_hit.transform.name);
 				Debug.Log (_enemy.transform.name + " HITTTT");
 				_enemy.takeDamage (dmg);
-				if (_enemy.isDead) {
-					kills++;
-					Debug.Log ("GOT A KILL");
-					scoreText.text = "SCORE: " + kills.ToString ();
-				}
 			}
 			onHit(_hit.point, _hit.normal);
 		}
