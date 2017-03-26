@@ -1,7 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMotor))]
-public class PlayerController : MonoBehaviour {
+[RequireComponent (typeof(PlayerMotor))]
+public class PlayerController : MonoBehaviour
+{
 
 	[SerializeField]
 	private float lookSensitivity = 3f;
@@ -10,7 +11,7 @@ public class PlayerController : MonoBehaviour {
 	private LayerMask environmentMask;
 
 	float getTime = 0.5f;
-	float lastTime = 0f; 
+	float lastTime = 0f;
 
 	float _yRot = 0f;
 	float _xRot = 0f;
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Start ()
 	{
-		motor = GetComponent<PlayerMotor>();
+		motor = GetComponent<PlayerMotor> ();
 		if (Cursor.lockState == CursorLockMode.None) {
 			Cursor.lockState = CursorLockMode.Locked;
 		}
@@ -38,17 +39,17 @@ public class PlayerController : MonoBehaviour {
 				lastTime = Time.time + getTime;
 			
 
-			Vector3 _rotation = new Vector3 (0f, _yRot, 0f) * lookSensitivity;
+				Vector3 _rotation = new Vector3 (0f, _yRot, 0f) * lookSensitivity;
 
-			//Apply rotation
-			motor.Rotate (_rotation);
+				//Apply rotation
+				motor.Rotate (_rotation);
 
-			float _cameraRotationX = _xRot * lookSensitivity;
+				float _cameraRotationX = _xRot * lookSensitivity;
 
-			//Apply camera rotation
-			motor.RotateCamera (_cameraRotationX);
+				//Apply camera rotation
+				motor.RotateCamera (_cameraRotationX);
+			}
+
 		}
-
 	}
-
 }
