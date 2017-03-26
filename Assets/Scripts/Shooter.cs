@@ -25,7 +25,7 @@ public class Shooter : MonoBehaviour {
 
 	[Header ("Redis")]
 	RedisMouse rm;
-	float getTime = 20f;
+	float getTime = 0.5f;
 	float lastTime = 0f; 
 	bool fire = false;
 

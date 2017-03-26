@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField]
 	private LayerMask environmentMask;
 
-	float getTime = 20f;
+	float getTime = 0.5f;
 	float lastTime = 0f; 
 
 	float _yRot = 0f;
@@ -36,10 +36,7 @@ public class PlayerController : MonoBehaviour {
 				_yRot = (float)rm.getXRot ();
 				_xRot = (float)rm.getZRot ();
 				lastTime = Time.time + getTime;
-			}
-
-			_yRot = 0;
-			_xRot = 0;
+			
 
 			Vector3 _rotation = new Vector3 (0f, _yRot, 0f) * lookSensitivity;
 
