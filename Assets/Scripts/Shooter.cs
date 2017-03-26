@@ -25,7 +25,7 @@ public class Shooter : MonoBehaviour {
 
 	[Header ("Redis")]
 	RedisMouse rm;
-	float getTime = 0.5f;
+	float getTime = 20f;
 	float lastTime = 0f; 
 	bool fire = false;
 
@@ -36,13 +36,10 @@ public class Shooter : MonoBehaviour {
 
 	void Update(){
 		ammoText.text = ammo.ToString ();
-		if (ammo < maxAmmo)
+		if (ammo <= 0)
 		{
-			if (Input.GetButtonDown("Reload"))
-			{
-				Reload();
-				return;
-			}
+			Reload ();
+			return;
 		}
 
 		if (Time.time > lastTime) {
@@ -51,22 +48,10 @@ public class Shooter : MonoBehaviour {
 			lastTime = Time.time + getTime;
 		}
 
-		if (fireRate <= 0f)
-		{
-			if (fire)
-			{
-				Shoot();
-				rm.afterFired ();
-			}
-		} else
-		{
-			if (fire)
-			{
-				InvokeRepeating("Shoot", 0f, 1f/fireRate);
-			} else if (Input.GetButtonUp ("Fire1"))
-			{
-				CancelInvoke("Shoot");
-			}
+		if (fire) {
+			Shoot();
+			rm.afterFired ();
+			fire = false;
 		}
 	}
 

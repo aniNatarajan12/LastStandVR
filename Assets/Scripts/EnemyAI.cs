@@ -25,14 +25,19 @@ public class EnemyAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Distance = Vector3.Distance(Target.transform.position, transform.position);
+		if (!HitCount.gameOver) {
+			Distance = Vector3.Distance (Target.transform.position, transform.position);
 
-		if (Distance > attackRange) {
-			transform.LookAt (Target.transform.position);
-			chase ();
-			animator.SetFloat ("speed", 1);
+			if (Distance > attackRange) {
+				transform.LookAt (Target.transform.position);
+				chase ();
+				animator.SetFloat ("speed", 1);
+			} else {
+				attack ();
+			}
 		} else {
-			attack ();
+			animator.SetBool ("attack", false);
+			animator.SetFloat ("speed", 0);
 		}
 	}
 
@@ -51,17 +56,11 @@ public class EnemyAI : MonoBehaviour {
 		if (Time.time > attackTime) {
 			animator.SetBool ("attack", false);
 			animator.SetBool ("attack", true);
-			Fortress frt = Target.GetComponent<Fortress> ();
-			frt.takeDmg (damage);
-			frt.healthPCT -= 0.05f;
-			frt.healthBar.localScale = new Vector3(1f, frt.healthPCT, 1f);
+
+			HitCount.addHit ();
 
 			attackTime = Time.time + attackRepeatTime;
 		}
-	}
-
-	public float sendPCT(float _pct){
-		return _pct;
 	}
 
 }

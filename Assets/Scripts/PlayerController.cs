@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField]
 	private LayerMask environmentMask;
 
-	float getTime = 0.5f;
+	float getTime = 20f;
 	float lastTime = 0f; 
 
 	float _yRot = 0f;
@@ -31,21 +31,26 @@ public class PlayerController : MonoBehaviour {
 
 	void Update ()
 	{
-		if (Time.time > lastTime) {
-			_yRot = (float)rm.getXRot ();
-			_xRot = (float)rm.getZRot ();
-			lastTime = Time.time + getTime;
+		if (!HitCount.gameOver) {
+			if (Time.time > lastTime) {
+				_yRot = (float)rm.getXRot ();
+				_xRot = (float)rm.getZRot ();
+				lastTime = Time.time + getTime;
+			}
+
+			_yRot = 0;
+			_xRot = 0;
+
+			Vector3 _rotation = new Vector3 (0f, _yRot, 0f) * lookSensitivity;
+
+			//Apply rotation
+			motor.Rotate (_rotation);
+
+			float _cameraRotationX = _xRot * lookSensitivity;
+
+			//Apply camera rotation
+			motor.RotateCamera (_cameraRotationX);
 		}
-
-		Vector3 _rotation = new Vector3(0f, _yRot, 0f) * lookSensitivity;
-
-		//Apply rotation
-		motor.Rotate(_rotation);
-
-		float _cameraRotationX = _xRot * lookSensitivity;
-
-		//Apply camera rotation
-		motor.RotateCamera(_cameraRotationX);
 
 	}
 

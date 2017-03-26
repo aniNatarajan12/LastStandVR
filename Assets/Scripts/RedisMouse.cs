@@ -15,7 +15,7 @@ public class RedisMouse : MonoBehaviour {
     }
 
 	void connect() {
-		redis = new RedisConnection("10.10.180.94", 6379);
+		redis = new RedisConnection("localhost", 6379);
 		Debug.Log ("Connect");
 	}
 
@@ -26,12 +26,6 @@ public class RedisMouse : MonoBehaviour {
 		double x = double.Parse(redis.Get<string, string> ("xRot"));
 		Debug.Log (x.ToString() + " X");
 		return x;
-	}
-
-	public double getYRot() {
-		double y = double.Parse(redis.Get<string, string> ("yRot"));
-		Debug.Log (y.ToString() + " Y");
-		return y;
 	}
 
 	public double getZRot() {

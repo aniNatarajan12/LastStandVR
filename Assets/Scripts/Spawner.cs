@@ -7,7 +7,6 @@ public class Spawner : MonoBehaviour {
 	[SerializeField] private GameObject refer;
 	[SerializeField] private float spawnRepeatTime;
 	[SerializeField] private float lastSpawnTime = 0;
-	[SerializeField] private float change = 10f;
 	[SerializeField] private static string numOfSpawns = "0";
 
 	void Start () {
@@ -43,8 +42,7 @@ public class Spawner : MonoBehaviour {
 	}
 
 	Vector3 getSpawnPoint(){
-		Vector3 spot = new Vector3(230.17f - change, 1f, 255.37f-change);
-		change = change + 5;
+		Vector3 spot = new Vector3(Random.Range(200f,300f), 1f, 285.3f);
 		return spot;
 	}
 }

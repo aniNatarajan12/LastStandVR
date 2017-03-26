@@ -16,12 +16,10 @@ public class Fortress : MonoBehaviour {
 
 	void Update(){
 		if (health <= 0) {
-//			Debug.Log("IM DEAD!");
 		}
 	}
 
 	public void takeDmg(int _dmg){
 		health -= _dmg;
-		Debug.Log("AHHH I TOOK DMG I HAVE HEALTH LEFT: " + health.ToString());
 	}
 }
