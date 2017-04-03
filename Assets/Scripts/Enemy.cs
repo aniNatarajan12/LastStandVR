@@ -49,7 +49,6 @@ public class Enemy : MonoBehaviour {
 		animator.SetBool("isDead", true);
 		HitCount.addKill ();
 		EnemyManager.UnRegisterEnemy (transform.name, id);
-		Destroy (this, 3f);
 
 		Debug.Log(transform.name + " is DEAD!");
 	}

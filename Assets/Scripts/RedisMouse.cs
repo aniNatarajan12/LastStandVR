@@ -9,13 +9,14 @@ using redisU.exceptions;
 public class RedisMouse : MonoBehaviour {
 
 	private RedisConnection redis = null;
+	private string IP = "192.168.1.166";
 
     void Start(){
 		connect ();
     }
 
 	void connect() {
-		redis = new RedisConnection("10.10.180.94", 6379);
+		redis = new RedisConnection(IP, 6379);
 //		Debug.Log ("Connect");
 	}
 

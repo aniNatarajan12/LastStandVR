@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour {
 	[SerializeField] private float  moveSpeed;
 	[SerializeField] private float attackRepeatTime;
 	private Animator animator;
+	private Enemy en;
 
 	[SerializeField] public int damage;
 
@@ -20,12 +21,13 @@ public class EnemyAI : MonoBehaviour {
 	void Start () {
 		attackTime = Time.time;
 		animator = GetComponent<Animator>();
-		damage = GetComponent<Enemy>().damage;
+		en = GetComponent<Enemy>();
+		damage = en.damage;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (!HitCount.gameOver) {
+		if (!HitCount.gameOver && !en.isDead) {
 			Distance = Vector3.Distance (Target.transform.position, transform.position);
 
 			if (Distance > attackRange) {

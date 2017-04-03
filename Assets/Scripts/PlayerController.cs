@@ -1,16 +1,11 @@
 using UnityEngine;
 
 [RequireComponent (typeof(PlayerMotor))]
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
 
-	[SerializeField]
-	private float lookSensitivity = 3f;
+	[SerializeField] private float lookSensitivity = 3f;
 
-	[SerializeField]
-	private LayerMask environmentMask;
-
-	float getTime = 0.5f;
+	[SerializeField] float getTime = 0.5f;
 	float lastTime = 0f;
 
 	float _yRot = 0f;
@@ -21,38 +16,38 @@ public class PlayerController : MonoBehaviour
 	// Component caching
 	private PlayerMotor motor;
 
-	void Start ()
-	{
+	void Start () {
 		motor = GetComponent<PlayerMotor> ();
-		if (Cursor.lockState == CursorLockMode.None) {
-			Cursor.lockState = CursorLockMode.Locked;
-		}
 		rm = GetComponent<RedisMouse> ();
 	}
 
-	void Update ()
-	{
-		if (!HitCount.gameOver) {
-			if (Time.time > lastTime) {
-				_yRot = (float)rm.getXRot ();
-				_xRot = (float)rm.getZRot ();
-				lastTime = Time.time + getTime;
-			
-
-				Vector3 _rotation = new Vector3 (0f, _yRot, 0f) * lookSensitivity;
-
-				//Apply rotation
-				motor.Rotate (_rotation);
-
-				float _cameraRotationX = _xRot * lookSensitivity;
-
-				//Apply camera rotation
-				motor.RotateCamera (_cameraRotationX);
-			}
-
-		} else {
+	void Update () {
+		if (HitCount.gameOver || !StartGame.gameStarted) {
 			_yRot = 0;
 			_xRot = 0;
+			motor.Rotate (Vector3.zero);
+			motor.RotateCamera (0f);
+			return;
+		}
+
+		if (Cursor.lockState == CursorLockMode.None)
+			Cursor.lockState = CursorLockMode.Locked;
+
+		if (Time.time > lastTime) {
+			_yRot = (float)rm.getXRot ();
+			_xRot = (float)rm.getZRot ();
+			lastTime = Time.time + getTime;
+			
+
+			Vector3 _rotation = new Vector3 (0f, _yRot, 0f) * lookSensitivity;
+
+			//Apply rotation
+			motor.Rotate (_rotation);
+
+			float _cameraRotationX = _xRot * lookSensitivity;
+
+			//Apply camera rotation
+			motor.RotateCamera (_cameraRotationX);
 		}
 	}
 }

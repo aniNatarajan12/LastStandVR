@@ -11,6 +11,8 @@ public class Shooter : MonoBehaviour {
 	[SerializeField] private GameObject hitEffectPrefab;
 
 	[Header ("WEAPON")]
+	[SerializeField] private Animator anim;
+	[SerializeField] private bool isLocal = true;
 	[SerializeField] private int maxAmmo;
 	[SerializeField] private int ammo;
 	[SerializeField] private int dmg;
@@ -21,10 +23,11 @@ public class Shooter : MonoBehaviour {
 	[Header ("UI")]
 	[SerializeField] private Text ammoText;
 	[SerializeField] private Text scoreText;
+	[SerializeField] private Image crosshair;
 
 	[Header ("Redis")]
 	RedisMouse rm;
-	float getTime = 0.5f;
+	float getTime = 0.2f;
 	float lastTime = 0f; 
 	bool fire = false;
 
@@ -34,23 +37,42 @@ public class Shooter : MonoBehaviour {
 	}
 
 	void Update(){
-		ammoText.text = ammo.ToString ();
-		if (ammo <= 0)
-		{
-			Reload ();
-			return;
-		}
+		if (!HitCount.gameOver && StartGame.gameStarted) {
+			ammoText.text = ammo.ToString ();
+			if (ammo <= 0) {
+				Reload ();
+				return;
+			}
 
-		if (Time.time > lastTime) {
-			fire = rm.getShouldFire();
+			checkCrosshairStatus ();
+
+			if (!isLocal) {
+				if (Time.time > lastTime) {
+					fire = rm.getShouldFire ();
 //			Debug.Log (fire.ToString() + "  SHOOOT");
-			lastTime = Time.time + getTime;
-		}
+					lastTime = Time.time + getTime;
+				}
 
-		if (fire) {
-			Shoot();
-			rm.afterFired ();
-			fire = false;
+				if (fire) {
+					Shoot ();
+					rm.afterFired ();
+					fire = false;
+				}
+			} else {
+				if (Input.GetButtonDown("Fire1")) {
+					Shoot ();
+				}
+			}
+		}
+	}
+
+	void checkCrosshairStatus(){
+		crosshair.color = Color.white;
+		RaycastHit _hit;
+		if (Physics.Raycast (cam.transform.position, cam.transform.forward, out _hit, 150)) {
+			if (_hit.collider.tag != "Environment") {
+				crosshair.color = Color.red;
+			}
 		}
 	}
 
@@ -74,26 +96,21 @@ public class Shooter : MonoBehaviour {
 
 		ammo = maxAmmo;
 
-		Animator anim = GetComponent<Animator>();
 		anim.SetBool("reloading", false);
 
 		isReloading = false;
 	}
 
 	void onReload(){
-		Animator anim = GetComponent<Animator>();
 		anim.SetBool("reloading", true);
 	}
 
-	void Shoot ()
-	{
-		if (isReloading)
-		{
+	void Shoot () {
+		if (isReloading) {
 			return;
 		}
 
-		if (ammo <= 0)
-		{
+		if (ammo <= 0) {
 			return;
 		}
 
@@ -102,12 +119,9 @@ public class Shooter : MonoBehaviour {
 		onShoot();
 
 		RaycastHit _hit;
-		if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, 150) )
-		{
+		if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, 150) ) {
 			if (_hit.collider.tag == "Enemy") {
-				Debug.Log (_hit.transform.name + " HIT");
 				Enemy _enemy = EnemyManager.GetEnemy (_hit.transform.name);
-				Debug.Log (_enemy.transform.name + " HITTTT");
 				_enemy.takeDamage (dmg);
 			}
 			onHit(_hit.point, _hit.normal);
